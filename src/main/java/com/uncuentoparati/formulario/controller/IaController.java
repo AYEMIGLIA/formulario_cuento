@@ -9,7 +9,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "https://amazing-sopapillas-45a8f1.netlify.app")  // <-- tu dominio
+@CrossOrigin(origins = "https://uncuentoparati.netlify.app")  // <-- tu dominio
 public class IaController {
 
     private final IaService iaService;
