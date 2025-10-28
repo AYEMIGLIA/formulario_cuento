@@ -15,6 +15,10 @@ public class IaService {
     private final String API_KEY = System.getenv("OPENAI_API_KEY");
 
     public String generarRecomendacion(List<String> perfil) throws Exception {
+        if (API_KEY == null) {
+            throw new RuntimeException("No se encontró la API Key de OpenAI en las variables de entorno");
+        }
+
         String prompt = "Soy un sistema que recomienda cuentos. Con base en este perfil lector: "
                 + String.join(", ", perfil)
                 + ", recomienda tres cuentos adecuados y explica brevemente por qué.";
@@ -33,8 +37,18 @@ public class IaService {
                 .build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        System.out.println("RESPUESTA DE OPENAI: " + response.body());
+
         JSONObject json = new JSONObject(response.body());
-        return json.getJSONArray("choices").getJSONObject(0)
-                .getJSONObject("message").getString("content");
+
+        if (!json.has("choices")) {
+            throw new RuntimeException("OpenAI no devolvió 'choices': " + response.body());
+        }
+
+        return json.getJSONArray("choices")
+                .getJSONObject(0)
+                .getJSONObject("message")
+                .getString("content");
     }
 }
