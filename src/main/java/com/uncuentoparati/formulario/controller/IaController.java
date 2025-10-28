@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
-@CrossOrigin(origins = "https://uncuentoparati.netlify.app")
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "https://amazing-sopapillas-45a8f1.netlify.app")  // <-- tu dominio
 public class IaController {
 
     private final IaService iaService;
